@@ -35,9 +35,12 @@ public class Category {
 
     @CreationTimestamp
     private LocalDateTime updatedAt;
+    public Category() {
+        // default constructor
+    }
 
-    public Category(String name, Category parentCategory, Boolean isActive) {
-        this.categoryName = name;
+    public Category(String categoryName, Boolean isActive) {
+        this.categoryName = categoryName;
         this.isActive = isActive;
     }
 
@@ -45,24 +48,24 @@ public class Category {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 
-    public String getName() {
+    public String getCategoryName() {
         return categoryName;
     }
 
-    public void setName(String name) {
-        this.categoryName = name;
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
     }
 
-    public Boolean getActive() {
+    public Boolean getIsActive() {
         return isActive;
     }
 
-    public void setActive(Boolean active) {
-        isActive = active;
+    public void setIsActive(Boolean isActive) {
+        this.isActive=isActive;
     }
 
     public LocalDateTime getCreatedAt() {

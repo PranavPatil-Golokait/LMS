@@ -22,6 +22,8 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public Category createCategory(Category category) {
+    	System.out.println(category.getCategoryName());
+    	System.out.println(category.getIsActive());
         return categoryRepository.save(category);
     }
 
@@ -30,8 +32,8 @@ public class CategoryServiceImpl implements CategoryService {
         Optional<Category> categoryDb = categoryRepository.findById(category.getId());
         if (categoryDb.isPresent()) {
             Category categoryUpdate = categoryDb.get();
-            categoryUpdate.setName(category.getName());
-            categoryUpdate.setActive(category.getActive());
+            categoryUpdate.setCategoryName(category.getCategoryName());
+            categoryUpdate.setIsActive(category.getIsActive());
             return categoryRepository.save(categoryUpdate);
         } else {
             throw new ResourceNotFoundException("Record not found with id: " + category.getId());

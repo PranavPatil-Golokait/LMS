@@ -21,8 +21,9 @@ public class CategoryController {
         return ResponseEntity.ok().body(categoryService.getAllCategories());
     }
 
-    @PostMapping("/categories")
+    @PostMapping("/addcategories")
     public ResponseEntity<Category> createCategory(@RequestBody Category category) {
+    	System.out.println(category);
         Category createdCategory = categoryService.createCategory(category);
         return new ResponseEntity<>(createdCategory, HttpStatus.CREATED);
     }

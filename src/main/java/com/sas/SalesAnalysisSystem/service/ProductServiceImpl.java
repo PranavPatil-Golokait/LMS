@@ -28,12 +28,16 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Product updateProduct(Product product) {
         Optional<Product> productDb = productRepository.findById(product.getId());
+        System.out.println(product);
         if (productDb.isPresent()) {
             Product productUpdate = productDb.get();
-            productUpdate.setName(product.getName());
+            System.out.println(productUpdate);
+            productUpdate.setProductName(product.getProductName());
             productUpdate.setImage(product.getImage());
+            productUpdate.setPrice(product.getPrice());
             productUpdate.setCategory(product.getCategory());
             productUpdate.setIsActive(product.getIsActive());
+            System.out.println(productUpdate);
             return productRepository.save(productUpdate);
         } else {
             throw new ResourceNotFoundException("Record not found with id: " + product.getId());
@@ -46,7 +50,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Product getProductById(Long productId) {
+    public Product getProductById(long productId) {
         Optional<Product> productDb = productRepository.findById(productId);
         return productDb.orElseThrow(() -> new ResourceNotFoundException("Record not found with id: " + productId));
     }

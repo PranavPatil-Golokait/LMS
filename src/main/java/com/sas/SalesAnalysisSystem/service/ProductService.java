@@ -6,7 +6,7 @@ import com.sas.SalesAnalysisSystem.model.Product;
 
 public interface ProductService {
 
-	Product getProductById(Long productId);
+	Product getProductById(long productId);
 
 	List<Product> getAllProduct();
 

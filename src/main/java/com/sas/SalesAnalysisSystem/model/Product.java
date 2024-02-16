@@ -21,7 +21,7 @@ public class Product {
 	 private long id;
 	
 	@Column(name = "product_name")
-	private String name;
+	private String productName;
 
 	@Column(name = "image")
 	private String image;
@@ -48,16 +48,16 @@ public class Product {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
-	public String getName() {
-		return name;
+	public String getProductName() {
+		return productName;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setProductName(String productName) {
+		this.productName = productName;
 	}
 
 	public String getImage() {
@@ -91,11 +91,13 @@ public class Product {
 	public void setIsActive(Boolean isActive) {
 		this.isActive = isActive;
 	}
+	public Product() {
+		
+	}
 	
-	
-	public Product(String name, String image, int price, Category category, Boolean isActive) 
+	public Product(String productName, String image, int price, Category category, Boolean isActive) 
 	{
-		this.name = name;
+		this.productName = productName;
         this.image = image;
         this.price = price;
         this.category = category;
@@ -106,7 +108,7 @@ public class Product {
 
 	@Override
 	public String toString() {
-		return "Product ["+" name=" + name + ", image=" + image + ", price=" + price + ", category="
+		return "Product ["+" name=" + productName + ", image=" + image + ", price=" + price + ", category="
 				+ category + ", isActive=" + isActive + "]";
 	}
 	

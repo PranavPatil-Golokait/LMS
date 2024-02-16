@@ -31,17 +31,18 @@ public class ProductController {
 	
 	@PostMapping("/products")
 	public ResponseEntity<Product> createProduct(@RequestBody Product product){
-		return ResponseEntity.ok().body(this.productService.createProduct(product));
+		Product createdProduct = productService.createProduct(product);
+        return new ResponseEntity<>(createdProduct, HttpStatus.CREATED);
 	}
 	
 	@PutMapping("/products/{id}")
-	public ResponseEntity<Product> updateProduct(@PathVariable Long id, @RequestBody Product product ){
+	public ResponseEntity<Product> updateProduct(@PathVariable long id, @RequestBody Product product ){
 		product.setId(id);
 		return ResponseEntity.ok().body(this.productService.updateProduct(product));
 	}
 	
 	@DeleteMapping("/products/{id}")
-	public HttpStatus deleteProduct(@PathVariable Long id){
+	public HttpStatus deleteProduct(@PathVariable long id){
 		this.productService.deleteProduct(id);
 		return HttpStatus.OK;
 		
