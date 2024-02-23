@@ -6,13 +6,13 @@ import com.sas.SalesAnalysisSystem.model.Product;
 
 public interface ProductService {
 
-	Product getProductById(long productId);
+	Product getProductById(Long productId);
 
 	List<Product> getAllProduct();
 
-	void deleteProduct(long productId);
+	void deleteProduct(Long productId);
 
-	Product updateProduct(Product product);
+	Product updateProduct(Long id,Product product);
 
 	Product createProduct(Product product);
 

@@ -12,16 +12,22 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name="product")
 public class Product {
 	 @Id
 	 @GeneratedValue(strategy = GenerationType.IDENTITY)
-	 private long id;
+	 private Long id;
 	
 	@Column(name = "product_name")
 	private String productName;
+	
+	@ManyToOne
+    @JoinColumn(name = "distributor_id")
+    private Distributor distributor;
 
 	@Column(name = "image")
 	private String image;
@@ -34,7 +40,7 @@ public class Product {
     private Category category;
 	
 	@Column(name="is_active")
-	private Boolean isActive;
+	private Boolean isActive= true;
 	
 	@CreationTimestamp
 	private LocalDateTime createdAt;
@@ -42,13 +48,11 @@ public class Product {
 	@CreationTimestamp
 	private LocalDateTime updatedAt;
 
-	
-
 	public Long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -81,6 +85,7 @@ public class Product {
 	}
 
 	public void setCategory(Category category) {
+		
 		this.category = category;
 	}
 

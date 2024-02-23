@@ -7,7 +7,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class SalesAnalysisSystemApplication {
 
 	public static void main(String[] args) {
+		
 		SpringApplication.run(SalesAnalysisSystemApplication.class, args);
+		System.out.print("Hello Neha");
 	}
 
 }

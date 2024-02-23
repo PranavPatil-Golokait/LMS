@@ -12,40 +12,67 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.sas.SalesAnalysisSystem.exception.ResourceNotFoundException;
+import com.sas.SalesAnalysisSystem.model.Category;
 import com.sas.SalesAnalysisSystem.model.Product;
 import com.sas.SalesAnalysisSystem.service.ProductService;
 
+import jakarta.validation.Valid;
+
 @RestController
-@RequestMapping("/home")
+@RequestMapping("/api/v1/products")
 public class ProductController {
 	@Autowired
 	private ProductService productService;
 	
-	
-	@GetMapping("/products")
-	ResponseEntity<List<Product>> getAllProduct(){
-		return ResponseEntity.ok().body(productService.getAllProduct());		
+	@GetMapping("/all")
+	public ResponseEntity<Object> getAllProduct() {
+	    try {
+	        List<Product> products = productService.getAllProduct();
+	        return ResponseEntity.ok().body(products);
+	    } catch (ResourceNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No categories found");
+        }
 	}
 	
-	@PostMapping("/products")
-	public ResponseEntity<Product> createProduct(@RequestBody Product product){
-		Product createdProduct = productService.createProduct(product);
-        return new ResponseEntity<>(createdProduct, HttpStatus.CREATED);
+	@GetMapping("/{id}")
+	public ResponseEntity<Object> getProductById(@PathVariable("id") Long id) {
+        try {
+        	Product product = productService.getProductById(id);
+            return ResponseEntity.ok().body(product);
+        } catch (ResourceNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+    }
+	
+	@PostMapping("/addproduct")
+	public ResponseEntity<Object> createProduct(@Valid @RequestBody Product product){
+        try {
+    		Product createdProduct = productService.createProduct(product);
+            return ResponseEntity.ok().body(createdProduct);
+        } catch (ResourceNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
 	}
 	
-	@PutMapping("/products/{id}")
-	public ResponseEntity<Product> updateProduct(@PathVariable long id, @RequestBody Product product ){
-		product.setId(id);
-		return ResponseEntity.ok().body(this.productService.updateProduct(product));
+	@PutMapping("/updateproduct/{id}")
+	public ResponseEntity<Object> updateProduct(@PathVariable("id") Long id,@Valid @RequestBody Product product ){
+		 try {
+	            Product updatedProduct = productService.updateProduct(id, product);
+	            return ResponseEntity.ok().body(updatedProduct);
+	        } catch (ResourceNotFoundException e) {
+	            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+	        }
 	}
 	
-	@DeleteMapping("/products/{id}")
-	public HttpStatus deleteProduct(@PathVariable long id){
+	
+	@DeleteMapping("/deleteproduct")
+	public HttpStatus deleteProducts(@RequestParam("id") Long id){
 		this.productService.deleteProduct(id);
 		return HttpStatus.OK;
-		
 	}
 	
 }

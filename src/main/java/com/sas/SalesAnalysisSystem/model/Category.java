@@ -19,7 +19,7 @@ import jakarta.persistence.Table;
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @Column(name = "category_name")
     private String categoryName;
@@ -28,7 +28,7 @@ public class Category {
     private List<Product> products;
 
     @Column(name="is_active")
-    private Boolean isActive;
+    private Boolean isActive = true;
 
     @CreationTimestamp
     private LocalDateTime createdAt;
@@ -36,7 +36,6 @@ public class Category {
     @CreationTimestamp
     private LocalDateTime updatedAt;
     public Category() {
-        // default constructor
     }
 
     public Category(String categoryName, Boolean isActive) {
@@ -46,10 +45,6 @@ public class Category {
 
     public Long getId() {
         return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 
     public String getCategoryName() {
