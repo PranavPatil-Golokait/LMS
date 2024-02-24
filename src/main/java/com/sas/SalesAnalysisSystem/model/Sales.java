@@ -9,6 +9,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 import java.time.LocalDateTime;
@@ -20,133 +21,82 @@ public class Sales {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "sales_id")
     private Long salesId;
-
-    @ManyToOne
-    @JoinColumn(name = "product_id")
-    private Product product;
-
-    @ManyToOne
-    @JoinColumn(name = "distributor_id")
-    private Distributor distributor;
-
-    @ManyToOne
-    @JoinColumn(name = "salesperson_id")
-    private Salesperson salesperson;
+    
+    @OneToOne
+    @JoinColumn(name = "invoice_no") 
+    private Invoice invoice;
 
     @Column(name = "no_of_product_sold")
     private int numberOfProductSold;
 
     @Column(name = "total_amount")
     private int totalAmount;
-
+    
+    @Column(name = "total_quantity")
+    private int totalQuantity;
+    
     @CreationTimestamp
-    @Column(name = "created_at")
-    private LocalDateTime createdAt;
+    @Column(name = "sales-created-date")
+    private LocalDateTime salesCreatedDate;
 
-    @CreationTimestamp
-    @Column(name = "updated_at")
-    private LocalDateTime updatedAt;
-
-    public Long getSalesId() {
+	public Long getSalesId() {
 		return salesId;
 	}
-
-
 
 	public void setSalesId(Long salesId) {
 		this.salesId = salesId;
 	}
 
-
-
-	public Product getProduct() {
-		return product;
+	public Invoice getInvoice() {
+		return invoice;
 	}
 
-
-
-	public void setProduct(Product product) {
-		this.product = product;
+	public void setInvoice(Invoice invoice) {
+		this.invoice = invoice;
 	}
-
-
-
-	public Distributor getDistributor() {
-		return distributor;
-	}
-
-
-
-	public void setDistributor(Distributor distributor) {
-		this.distributor = distributor;
-	}
-
-
-
-	public Salesperson getSalesperson() {
-		return salesperson;
-	}
-
-
-
-	public void setSalesperson(Salesperson salesperson) {
-		this.salesperson = salesperson;
-	}
-
-
 
 	public int getNumberOfProductSold() {
 		return numberOfProductSold;
 	}
 
-
-
 	public void setNumberOfProductSold(int numberOfProductSold) {
 		this.numberOfProductSold = numberOfProductSold;
 	}
-
-
 
 	public int getTotalAmount() {
 		return totalAmount;
 	}
 
-
-
 	public void setTotalAmount(int totalAmount) {
 		this.totalAmount = totalAmount;
 	}
-	public Sales() {
-		
+
+	public int getTotalQuantity() {
+		return totalQuantity;
 	}
 
+	public void setTotalQuantity(int totalQuantity) {
+		this.totalQuantity = totalQuantity;
+	}
 
-	public Sales(Long salesId, Product product, Distributor distributor, Salesperson salesperson,
-			int numberOfProductSold, int totalAmount, LocalDateTime createdAt, LocalDateTime updatedAt) {
+	public LocalDateTime getSalesCreatedDate() {
+		return salesCreatedDate;
+	}
+
+	public void setSalesCreatedDate(LocalDateTime salesCreatedDate) {
+		this.salesCreatedDate = salesCreatedDate;
+	}
+
+	public Sales(Long salesId, Invoice invoice, int numberOfProductSold, int totalAmount, int totalQuantity,
+			LocalDateTime salesCreatedDate) {
 		super();
 		this.salesId = salesId;
-		this.product = product;
-		this.distributor = distributor;
-		this.salesperson = salesperson;
+		this.invoice = invoice;
 		this.numberOfProductSold = numberOfProductSold;
 		this.totalAmount = totalAmount;
-		this.createdAt = createdAt;
-		this.updatedAt = updatedAt;
+		this.totalQuantity = totalQuantity;
+		this.salesCreatedDate = salesCreatedDate;
 	}
 
-
-
-	@Override
-    public String toString() {
-        return "Sales{" +
-                "salesId=" + salesId +
-                ", product=" + product +
-                ", distributor=" + distributor +
-                ", salesperson=" + salesperson +
-                ", numberOfProductSold=" + numberOfProductSold +
-                ", totalAmount=" + totalAmount +
-                ", createdAt=" + createdAt +
-                ", updatedAt=" + updatedAt +
-                '}';
-    }
+    
 }

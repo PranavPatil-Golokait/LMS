@@ -18,6 +18,7 @@ public class InvoiceServiceImpl implements InvoiceService {
 	
 	@Autowired
 	public InvoiceServiceImpl(InvoiceRepository invoiceRepository) {
+		
         this.invoiceRepository = invoiceRepository;
     }
 
@@ -60,10 +61,10 @@ public class InvoiceServiceImpl implements InvoiceService {
 	
 	@Override
     public Invoice updateInvoice(Invoice updatedInvoice) {
-        Optional<Invoice> existingInvoice = invoiceRepository.findById(updatedInvoice.getInvoice_number());
+        Optional<Invoice> existingInvoice = invoiceRepository.findById(updatedInvoice.getInvoiceNumber());
         if (existingInvoice.isPresent()) {
             Invoice invoiceUpdate = existingInvoice.get();
-            invoiceUpdate.setInvoice_number(updatedInvoice.getInvoice_number());
+            invoiceUpdate.setInvoiceNumber(updatedInvoice.getInvoiceNumber());
             invoiceUpdate.setInvDate(updatedInvoice.getInvDate());
             invoiceUpdate.setNetAmount(updatedInvoice.getNetAmount());
             invoiceUpdate.setCgst(updatedInvoice.getCgst());
@@ -79,7 +80,7 @@ public class InvoiceServiceImpl implements InvoiceService {
             
             return invoiceRepository.save(invoiceUpdate);
         } else {
-            throw new ResourceNotFoundException("Record not found with Invoice Number: " + updatedInvoice.getInvoice_number());
+            throw new ResourceNotFoundException("Record not found with Invoice Number: " + updatedInvoice.getInvoiceNumber());
         }
     }
 	

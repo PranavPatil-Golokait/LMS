@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/home")
+@RequestMapping("/api/v1/profiles")
 public class ProfileController {
 
     private final ProfileService profileService;
@@ -22,7 +22,7 @@ public class ProfileController {
         this.profileService = profileService;
     }
 
-    @GetMapping("/profiles")
+    @GetMapping("/all")
     public ResponseEntity<Object> getAllProfiles() {
         try {
             List<Profile> profiles = profileService.getAllProfiles();
@@ -32,7 +32,7 @@ public class ProfileController {
         }
     }
 
-    @GetMapping("/profiles/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<Object> getProfileById(@PathVariable("id") Long id) {
         try {
             Profile profile = profileService.getProfileById(id);
@@ -42,7 +42,7 @@ public class ProfileController {
         }
     }
 
-    @PostMapping("/profiles")
+    @PostMapping("/add-profile")
     public ResponseEntity<Object> createProfile(@Valid @RequestBody Profile profile) {
         try {
             Profile createdProfile = profileService.createProfile(profile);
@@ -52,7 +52,7 @@ public class ProfileController {
         }
     }
 
-    @PutMapping("/profiles/{id}")
+    @PutMapping("/update-profile")
     public ResponseEntity<Object> updateProfile(@PathVariable("id") Long id, @Valid @RequestBody Profile profile) {
         try {
             Profile updatedProfile = profileService.updateProfile(id, profile);
@@ -62,7 +62,7 @@ public class ProfileController {
         }
     }
 
-    @DeleteMapping("/profiles/{id}")
+    @DeleteMapping("delete-profile/{id}")
     public HttpStatus deleteProfile(@PathVariable("id") Long id) {
         this.profileService.deleteProfile(id);
         return HttpStatus.OK;

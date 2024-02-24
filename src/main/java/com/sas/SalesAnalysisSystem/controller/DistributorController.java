@@ -32,7 +32,7 @@ public class DistributorController {
         }
     }
     
-    @GetMapping("{id}/allproducts")
+    @GetMapping("{id}/all-products")
     public ResponseEntity<Object> getAllProducts(@PathVariable("id") Integer id){
     	try {
     		List<Product> products=distributorService.getAllProducts(id);
@@ -44,7 +44,7 @@ public class DistributorController {
     	
     }
     
-    @GetMapping("{id}/allsalesperson")
+    @GetMapping("{id}/all-salesperson")
     public ResponseEntity<Object> getAllSalesperson(@PathVariable("id") Integer id){
     	try {
     		List<Salesperson> salesperson=distributorService.getAllSalesperson(id);
@@ -67,7 +67,7 @@ public class DistributorController {
         }
     }
 	
-    @PostMapping("/adddistributor")
+    @PostMapping("/add-distributor")
     public ResponseEntity<Object> createDistributor(@Valid @RequestBody Distributor distributor) {
         try {
         	Distributor createdDistributor = distributorService.createDistributor(distributor);
@@ -77,7 +77,7 @@ public class DistributorController {
         }
     }
     
-    @PutMapping("/updatedistributor/{id}")
+    @PutMapping("/update-distributor/{id}")
     public ResponseEntity<Object> updateDistributor(@PathVariable("id") Integer id, @Valid @RequestBody Distributor distributor) {
         try {
 			 Distributor updatedDistributor = distributorService.updateDistributor(id,distributor);
@@ -87,7 +87,7 @@ public class DistributorController {
 	        }
     }
 
-    @DeleteMapping("/deletedistributor/{id}")
+    @DeleteMapping("/delete-distributor/{id}")
     public HttpStatus deleteDistributor(@PathVariable("id") Integer id) {
         this.distributorService.deleteDistributor(id);
         return HttpStatus.OK;

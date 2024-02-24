@@ -11,51 +11,82 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="invoice")
+@Table(name = "invoice")
 public class Invoice {
+    
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long invoice_number;
+    @Column(name = "invoice_number") // Specify column name
+    private long invoiceNumber; // Updated property name to follow Java naming conventions
     
     @CreationTimestamp
+    @Column(name = "inv_date") 
     private LocalDate invDate;
+    
+    @OneToMany(mappedBy = "invoice", cascade = CascadeType.ALL)
+    private List<Product> products;
+    
+    @ManyToOne
+    @JoinColumn(name = "distributor_id")
+    private Distributor distributor;
 
+    @Column(name = "net_amount") 
     private double netAmount;
 
+    @Column(name = "cgst") 
     private double cgst;
 
+    @Column(name = "sgst")
     private double sgst;
 
+    @Column(name = "total_amount")
     private double totalAmount;
 
+    @Column(name = "purchase_number")
     private String purchaseNumber;
 
+    @Column(name = "purchase_date")
     private LocalDate purchaseDate;
 
+    @Column(name = "supplier_name") 
     private String supplierName;
 
+    @Column(name = "discount") 
     private double discount;
 
+    @Column(name = "quantity") 
     private int quantity;
 
+    @Column(name = "vat_tax") 
     private double vatTax;
 
-    private String note;   
+    @Column(name = "note")
+    private String note;
+    
+    public List<Product> getProducts() {
+		return products;
+	}
+	public void setProducts(List<Product> products) {
+		this.products = products;
+	}
+	public void setDistributor(Distributor distributor) {
+		this.distributor = distributor;
+	}
     
     public Invoice() {
     	
     }
-
-	public long getInvoice_number() {
-		return invoice_number;
+    public Distributor getDistributor() {
+		return distributor;
 	}
 
-	public void setInvoice_number(long invoice_number) {
-		this.invoice_number = invoice_number;
-	}
 
 	public LocalDate getInvDate() {
 		return invDate;
@@ -65,6 +96,37 @@ public class Invoice {
 		this.invDate = invDate;
 	}
 
+	public Invoice(LocalDate invDate, List<Product> products, Distributor distributor, double netAmount, double cgst,
+			double sgst, double totalAmount, String purchaseNumber, LocalDate purchaseDate, String supplierName,
+			double discount, int quantity, double vatTax, String note) {
+		super();
+		this.invDate = invDate;
+		this.products = products;
+		this.distributor = distributor;
+		this.netAmount = netAmount;
+		this.cgst = cgst;
+		this.sgst = sgst;
+		this.totalAmount = totalAmount;
+		this.purchaseNumber = purchaseNumber;
+		this.purchaseDate = purchaseDate;
+		this.supplierName = supplierName;
+		this.discount = discount;
+		this.quantity = quantity;
+		this.vatTax = vatTax;
+		this.note = note;
+	}
+	public long getInvoiceNumber() {
+		return invoiceNumber;
+	}
+	public void setInvoiceNumber(long invoiceNumber) {
+		this.invoiceNumber = invoiceNumber;
+	}
+	public String getNote() {
+		return note;
+	}
+	public void setNote(String note) {
+		this.note = note;
+	}
 	public double getNetAmount() {
 		return netAmount;
 	}
@@ -145,31 +207,6 @@ public class Invoice {
 		this.vatTax = vatTax;
 	}
 
-	public String getNote() {
-		return note;
-	}
-
-	public void setNote(String note) {
-		this.note = note;
-	}
-
-	public Invoice(long invoice_number, LocalDate invDate, double netAmount, double cgst, double sgst,
-			double totalAmount, String purchaseNumber, LocalDate purchaseDate, String supplierName, double discount,
-			int quantity, double vatTax, String note) {
-		super();
-		this.invoice_number = invoice_number;
-		this.invDate = invDate;
-		this.netAmount = netAmount;
-		this.cgst = cgst;
-		this.sgst = sgst;
-		this.totalAmount = totalAmount;
-		this.purchaseNumber = purchaseNumber;
-		this.purchaseDate = purchaseDate;
-		this.supplierName = supplierName;
-		this.discount = discount;
-		this.quantity = quantity;
-		this.vatTax = vatTax;
-		this.note = note;
-	}
+	
     
 }

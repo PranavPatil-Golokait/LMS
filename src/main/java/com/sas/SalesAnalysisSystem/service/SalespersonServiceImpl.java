@@ -21,7 +21,8 @@ public class SalespersonServiceImpl implements SalespersonService {
     private final DistributorRepository distributorRepository;
 
     @Autowired
-    public SalespersonServiceImpl(SalespersonRepository salespersonRepository,DistributorRepository distributorRepository) {
+    public SalespersonServiceImpl(SalespersonRepository salespersonRepository,DistributorRepository 
+    		distributorRepository) {
         this.salespersonRepository = salespersonRepository;
         this.distributorRepository=distributorRepository;
     }

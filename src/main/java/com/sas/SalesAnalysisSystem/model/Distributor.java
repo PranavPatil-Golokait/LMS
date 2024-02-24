@@ -9,6 +9,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 
 @Entity
 public class Distributor {
@@ -22,8 +23,10 @@ public class Distributor {
 	
 	@OneToMany(mappedBy = "distributor" , cascade = CascadeType.ALL)
 	private List<Product> products;
+	
+	@OneToOne(mappedBy = "distributor", cascade = CascadeType.ALL)
+    private Profile profile;
     
-
 	@Column(name = "Address")
     private String address;
     
@@ -61,7 +64,14 @@ public class Distributor {
 		this.salespersons = salespersons;
 	}
 
-	
+
+	public Profile getProfile() {
+		return profile;
+	}
+
+	public void setProfile(Profile profile) {
+		this.profile = profile;
+	}
 
 	public String getIsActive() {
 		return isActive;
@@ -113,7 +123,6 @@ public class Distributor {
 
 	public Distributor(List<Salesperson> salespersons, List<Product> products, String address, String state,
 			String agencyName, String contactPerson, String contactNumber, String email, String isActive) {
-		super();
 		this.salespersons = salespersons;
 		this.products = products;
 		this.address = address;

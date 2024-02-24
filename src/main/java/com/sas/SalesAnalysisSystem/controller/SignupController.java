@@ -15,6 +15,7 @@ import com.sas.SalesAnalysisSystem.repository.UserRepository;
 
 @Controller
 @RequestMapping(path="/Signup")
+
 public class SignupController {
 	
 	@Autowired

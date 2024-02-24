@@ -21,6 +21,10 @@ public class Product {
 	 @Id
 	 @GeneratedValue(strategy = GenerationType.IDENTITY)
 	 private Long id;
+	 
+	 @ManyToOne
+	 @JoinColumn(name = "invoice_id")  // Name of the foreign key column in the product table
+	 private Invoice invoice;
 	
 	@Column(name = "product_name")
 	private String productName;

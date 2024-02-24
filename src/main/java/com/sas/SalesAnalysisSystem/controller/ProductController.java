@@ -48,7 +48,7 @@ public class ProductController {
         }
     }
 	
-	@PostMapping("/addproduct")
+	@PostMapping("/add-product")
 	public ResponseEntity<Object> createProduct(@Valid @RequestBody Product product){
         try {
     		Product createdProduct = productService.createProduct(product);
@@ -58,7 +58,7 @@ public class ProductController {
         }
 	}
 	
-	@PutMapping("/updateproduct/{id}")
+	@PutMapping("/update-product/{id}")
 	public ResponseEntity<Object> updateProduct(@PathVariable("id") Long id,@Valid @RequestBody Product product ){
 		 try {
 	            Product updatedProduct = productService.updateProduct(id, product);
@@ -69,7 +69,7 @@ public class ProductController {
 	}
 	
 	
-	@DeleteMapping("/deleteproduct")
+	@DeleteMapping("/delete-product")
 	public HttpStatus deleteProducts(@RequestParam("id") Long id){
 		this.productService.deleteProduct(id);
 		return HttpStatus.OK;

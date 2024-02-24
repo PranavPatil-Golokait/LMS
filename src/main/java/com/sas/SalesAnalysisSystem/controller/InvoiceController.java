@@ -22,13 +22,13 @@ import com.sas.SalesAnalysisSystem.service.InvoiceService;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("home/invoice")
+@RequestMapping("api/v1/invoice")
 public class InvoiceController {
 
     @Autowired
     private InvoiceService invoiceService;
 
-    @PostMapping("/createinvoice")
+    @PostMapping("/create-invoice")
     public ResponseEntity<Object> createInvoice(@Valid @RequestBody Invoice invoice) {
         try {
             Invoice createdInvoice = invoiceService.createInvoice(invoice); 
@@ -68,7 +68,7 @@ public class InvoiceController {
         }
     }
 
-    @PutMapping("/updateinvoice")
+    @PutMapping("/update-invoice")
     public ResponseEntity<Object> updateInvoice(@RequestBody Invoice invoice) {
         try {
             Invoice updatedInvoice = invoiceService.updateInvoice(invoice); 
@@ -78,7 +78,7 @@ public class InvoiceController {
         }
     }
 
-    @DeleteMapping("/deleteinvoice/{id}")
+    @DeleteMapping("/delete-invoice/{id}")
     public ResponseEntity<Object> deleteInvoice(@PathVariable Long id) {
         try {
             invoiceService.deleteInvoice(id);

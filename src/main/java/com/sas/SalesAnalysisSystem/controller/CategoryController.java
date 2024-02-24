@@ -49,13 +49,13 @@ public class CategoryController {
     }
 
 
-    @PostMapping("/addcategories")
+    @PostMapping("/add-categories")
     public ResponseEntity<Category> createCategory(@Valid @RequestBody Category category) {
         Category createdCategory = categoryService.createCategory(category);
         return new ResponseEntity<>(createdCategory, HttpStatus.CREATED);
     }
     
-    @PutMapping("updatecategories/{id}")
+    @PutMapping("update-categories/{id}")
     public ResponseEntity<Object> updateCategory(@PathVariable("id") Long id, @Valid @RequestBody Category category) {
         try {
             Category updatedCategory = categoryService.updateCategory(id, category);
@@ -66,7 +66,7 @@ public class CategoryController {
     }
 
 
-    @DeleteMapping("/deletecategories")
+    @DeleteMapping("/delete-categories")
     public HttpStatus deleteCategory(@RequestParam("id") Long id) {
         this.categoryService.deleteCategory(id);
         return HttpStatus.OK;

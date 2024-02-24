@@ -9,6 +9,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 
@@ -18,7 +19,11 @@ public class Profile {
 	
 	 	@Id
 	    @GeneratedValue(strategy = GenerationType.IDENTITY)
+	 	@Column(name = "Id")
 	    private Long id;
+	 	
+	    @OneToOne
+	    private Distributor distributor;
 
 	    @Column(name = "firstName")
 	    private String firstName;
@@ -47,8 +52,8 @@ public class Profile {
 	    @CreationTimestamp
 	    private LocalDateTime updatedAt;
 	    
-	    
-	    public Profile() {
+
+		public Profile() {
 		}
 	    
 
@@ -63,6 +68,17 @@ public class Profile {
 		public String getFirstName() {
 			return firstName;
 		}
+
+
+		  public Distributor getDistributor() {
+				return distributor;
+			}
+
+
+			public void setDistributor(Distributor distributor) {
+				this.distributor = distributor;
+			}
+
 
 		public void setFirstName(String firstName) {
 			this.firstName = firstName;

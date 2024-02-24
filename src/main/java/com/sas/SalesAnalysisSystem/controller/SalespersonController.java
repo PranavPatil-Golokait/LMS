@@ -13,16 +13,17 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/home")
+@RequestMapping("api/v1/salespersons")
 public class SalespersonController {
     private final SalespersonService salespersonService;
 
     @Autowired
+    
     public SalespersonController(SalespersonService salespersonService) {
         this.salespersonService = salespersonService;
     }
 
-    @GetMapping("/salespersons")
+    @GetMapping("/all")
     public ResponseEntity<Object> getAllSalespersons() {
         try {
             List<Salesperson> salespersons = salespersonService.getAllSalespersons();
@@ -32,7 +33,7 @@ public class SalespersonController {
         }
     }
 
-    @GetMapping("/salespersons/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<Object> getSalespersonById(@PathVariable("id") Integer id) {
         try {
             Salesperson salesperson = salespersonService.getSalespersonById(id);
@@ -42,7 +43,7 @@ public class SalespersonController {
         }
     }
 
-    @PostMapping("/salespersons")
+    @PostMapping("/add-salesperson")
     public ResponseEntity<Object> createSalesperson(@Valid @RequestBody Salesperson salesperson) {
         try {
             Salesperson createdSalesperson = salespersonService.createSalesperson(salesperson);
@@ -52,7 +53,7 @@ public class SalespersonController {
         }
     }
 
-    @PutMapping("/salespersons/{id}")
+    @PutMapping("/update-salesperson/{id}")
     public ResponseEntity<Object> updateSalesperson(@PathVariable("id") Integer id, @Valid @RequestBody Salesperson salesperson) {
         try {
             Salesperson updatedSalesperson = salespersonService.updateSalesperson(id, salesperson);
@@ -62,7 +63,7 @@ public class SalespersonController {
         }
     }
 
-    @DeleteMapping("/salespersons/{id}")
+    @DeleteMapping("/delete-salesperson/{id}")
     public HttpStatus deleteSalesperson(@PathVariable("id") Integer id) {
         this.salespersonService.deleteSalesperson(id);
         return HttpStatus.OK;

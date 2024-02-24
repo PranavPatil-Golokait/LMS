@@ -1,6 +1,4 @@
 package com.sas.SalesAnalysisSystem.service;
-
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -12,13 +10,11 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.sas.SalesAnalysisSystem.exception.ResourceNotFoundException;
-import com.sas.SalesAnalysisSystem.model.Category;
 import com.sas.SalesAnalysisSystem.model.Distributor;
 import com.sas.SalesAnalysisSystem.model.Product;
 import com.sas.SalesAnalysisSystem.model.Salesperson;
 import com.sas.SalesAnalysisSystem.repository.DistributorRepository;
 
-import io.micrometer.common.util.StringUtils;
 
 @Service
 public class DistributorServiceImpl implements DistributorService {
@@ -32,6 +28,7 @@ public class DistributorServiceImpl implements DistributorService {
 
     @Override
     public Distributor createDistributor(Distributor distributor) {
+    	
         try {
         	 if (isValidEmail(distributor.getEmail())) {
                  return distributorRepository.save(distributor);
