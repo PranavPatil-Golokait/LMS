@@ -14,21 +14,29 @@ import com.sas.SalesAnalysisSystem.model.Distributor;
 import com.sas.SalesAnalysisSystem.model.Product;
 import com.sas.SalesAnalysisSystem.model.Salesperson;
 import com.sas.SalesAnalysisSystem.repository.DistributorRepository;
+import com.sas.SalesAnalysisSystem.repository.ProductRepository;
+import com.sas.SalesAnalysisSystem.repository.SalespersonRepository;
 
 
 @Service
 public class DistributorServiceImpl implements DistributorService {
 
     private final DistributorRepository distributorRepository;
+    private final ProductRepository productRepository;
+    private final SalespersonRepository salespersonRepository;
+
 
     @Autowired
-    public DistributorServiceImpl(DistributorRepository distributorRepository) {
-        this.distributorRepository = distributorRepository;
-    }
+	public DistributorServiceImpl(DistributorRepository distributorRepository, ProductRepository productRepository,
+			SalespersonRepository salespersonRepository) {
+		this.distributorRepository = distributorRepository;
+		this.productRepository = productRepository;
+		this.salespersonRepository = salespersonRepository;
+	}
 
+    
     @Override
     public Distributor createDistributor(Distributor distributor) {
-    	
         try {
         	 if (isValidEmail(distributor.getEmail())) {
                  return distributorRepository.save(distributor);
@@ -40,8 +48,30 @@ public class DistributorServiceImpl implements DistributorService {
         }
     }
 
-    
-    public Distributor updateDistributor(Integer id,Distributor distributor) {
+    @Override
+    public void addProductsToDistributor(int distributorId, List<Long> productIds) {
+        Optional<Distributor> distributor = distributorRepository.findById(distributorId);
+
+        if (!distributor.isPresent()) {
+            throw new ResourceNotFoundException("Distributor not found with id: " + distributorId);
+        }
+
+        System.out.println(distributor);
+
+        List<Product> products = productRepository.findAllById(productIds);
+
+        if (products.size() != productIds.size()) {
+            throw new IllegalArgumentException("Not all products with the given IDs were found");
+        }
+        if (distributor.isPresent()) {
+            Distributor dist = distributor.get();
+            dist.setProductList(products);
+            distributorRepository.save(dist);
+        }
+    }
+
+    @Override
+	public Distributor updateDistributor(Integer id,Distributor distributor) {
         Optional<Distributor> distributorDb = distributorRepository.findById(id);
         if (distributorDb.isPresent()) {
             Distributor distributorUpdate = distributorDb.get();
@@ -78,6 +108,29 @@ public class DistributorServiceImpl implements DistributorService {
         }
         return distributorDb.get();
     }
+    
+    @Override
+    public void addSalespersonsToDistributor(int distributorId, List<Long> salespersonIds) {
+        Optional<Distributor> distributor = distributorRepository.findById(distributorId);
+
+        if (!distributor.isPresent()) {
+            throw new ResourceNotFoundException("Distributor not found with id: " + distributorId);
+        }
+
+        System.out.println(distributor);
+        List<Salesperson> salespersons = salespersonRepository.findAllById(salespersonIds);
+
+        if (salespersons.size() != salespersonIds.size()) {
+            throw new IllegalArgumentException("Not all salespersons with the given IDs were found");
+        }
+
+        if (distributor.isPresent()) {
+            Distributor dist = distributor.get();
+            dist.setSalespersons(salespersons);
+            distributorRepository.save(dist);
+        }
+    }
+    
 
     @Override
     public void deleteDistributor(int distributorId) {
@@ -88,37 +141,6 @@ public class DistributorServiceImpl implements DistributorService {
             throw new ResourceNotFoundException("Record not found with id: " + distributorId);
         }
     }
-//    private void validateDistributor(Distributor distributor) {
-//        if (distributor == null) {
-//            throw new ResourceNotFoundException("Distributor cannot be null");
-//        }
-//
-//        if (StringUtils.isBlank(distributor.getAgencyName())) {
-//            throw new ResourceNotFoundException("Agency Name cannot be blank or null");
-//        }
-//
-//        if (StringUtils.isBlank(distributor.getAddress())) {
-//            throw new ResourceNotFoundException("Address cannot be blank or null");
-//        }
-//
-//        if (StringUtils.isBlank(distributor.getState())) {
-//            throw new ResourceNotFoundException("State cannot be blank or null");
-//        }
-//
-//        if (StringUtils.isBlank(distributor.getContactPerson())) {
-//            throw new ResourceNotFoundException("Contact Person cannot be blank or null");
-//        }
-//
-//        if (StringUtils.isBlank(distributor.getContactNumber())) {
-//            throw new ResourceNotFoundException("Contact Number cannot be blank or null");
-//        }
-//
-//        if (StringUtils.isBlank(distributor.getEmail()) || !isValidEmail(distributor.getEmail())) {
-//            throw new ResourceNotFoundException("Invalid or blank email");
-//        }
-//    }
-//
-    
 
     private boolean isValidEmail(String email) {
         if (email == null) {
@@ -131,14 +153,12 @@ public class DistributorServiceImpl implements DistributorService {
 
         return matcher.matches();
     }
-
-
 	@Override
 	public List<Product> getAllProducts(Integer id) {
 		Optional<Distributor> distributorDb = distributorRepository.findById(id);
 		if(distributorDb.isPresent()) {
 			Distributor finddistributor =   distributorDb.get();
-			   List<Product> allProducts = finddistributor.getProducts();
+			   List<Product> allProducts = finddistributor.getProductList();
 			   return allProducts;
 		}
 		else {

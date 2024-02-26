@@ -26,11 +26,11 @@ public class SecurityConfig {
 		http.csrf(csrf -> csrf.disable())
 		.cors(cors -> cors.disable())
 		.authorizeHttpRequests(auth -> auth
-//		.requestMatchers("/auth/login").permitAll()
+		.requestMatchers("/auth/login").permitAll()
+		.requestMatchers("/Signup/**").permitAll()
+		.requestMatchers("/api/v1/**").permitAll()
 		.requestMatchers("**").permitAll()
-//		.requestMatchers("/Signup/**").permitAll()
-//		.requestMatchers("/home/**").permitAll()
-//		.requestMatchers("/hometest/**").authenticated()
+		.requestMatchers("/hometest/**").authenticated()
 		)
 		.exceptionHandling(ex -> ex.authenticationEntryPoint(point))
 		.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));

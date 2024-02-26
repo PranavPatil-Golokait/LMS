@@ -43,6 +43,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 	        // Iterate through the cookies to find the one with the key "jwt"
         for (Cookie cookie : cookies) {
             if ("jwt".equals(cookie.getName())) {
+            	
                 // Found the cookie with the key "jwt", extract its value
                 jwtToken = cookie.getValue();
                 logger.info(jwtToken);

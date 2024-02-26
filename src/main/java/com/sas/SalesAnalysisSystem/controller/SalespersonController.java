@@ -34,7 +34,7 @@ public class SalespersonController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Object> getSalespersonById(@PathVariable("id") Integer id) {
+    public ResponseEntity<Object> getSalespersonById(@PathVariable("id") Long id) {
         try {
             Salesperson salesperson = salespersonService.getSalespersonById(id);
             return ResponseEntity.ok().body(salesperson);
@@ -52,9 +52,10 @@ public class SalespersonController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
+    
 
     @PutMapping("/update-salesperson/{id}")
-    public ResponseEntity<Object> updateSalesperson(@PathVariable("id") Integer id, @Valid @RequestBody Salesperson salesperson) {
+    public ResponseEntity<Object> updateSalesperson(@PathVariable("id") Long id, @Valid @RequestBody Salesperson salesperson) {
         try {
             Salesperson updatedSalesperson = salespersonService.updateSalesperson(id, salesperson);
             return ResponseEntity.ok().body(updatedSalesperson);
@@ -64,7 +65,7 @@ public class SalespersonController {
     }
 
     @DeleteMapping("/delete-salesperson/{id}")
-    public HttpStatus deleteSalesperson(@PathVariable("id") Integer id) {
+    public HttpStatus deleteSalesperson(@PathVariable("id") Long id) {
         this.salespersonService.deleteSalesperson(id);
         return HttpStatus.OK;
     }

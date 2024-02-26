@@ -19,11 +19,10 @@ public class Profile {
 	
 	 	@Id
 	    @GeneratedValue(strategy = GenerationType.IDENTITY)
-	 	@Column(name = "Id")
 	    private Long id;
 	 	
-	    @OneToOne
-	    private Distributor distributor;
+//	    @OneToOne
+//	    private Distributor distributor;
 
 	    @Column(name = "firstName")
 	    private String firstName;
@@ -68,17 +67,6 @@ public class Profile {
 		public String getFirstName() {
 			return firstName;
 		}
-
-
-		  public Distributor getDistributor() {
-				return distributor;
-			}
-
-
-			public void setDistributor(Distributor distributor) {
-				this.distributor = distributor;
-			}
-
 
 		public void setFirstName(String firstName) {
 			this.firstName = firstName;

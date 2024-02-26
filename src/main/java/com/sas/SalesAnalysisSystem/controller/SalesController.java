@@ -30,6 +30,7 @@ public class SalesController {
         return salesRepository.findByInvoice_Products_ProductName(productName);
     }
 
+    //right
     // Endpoint to get sales by region (assuming distributor's state represents region)
     @GetMapping("/by-region")
     public List<Sales> getSalesByRegion(@RequestParam String region) {

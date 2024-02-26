@@ -2,6 +2,7 @@ package com.sas.SalesAnalysisSystem.service;
 
 import com.sas.SalesAnalysisSystem.exception.ResourceNotFoundException;
 import com.sas.SalesAnalysisSystem.model.Category;
+import com.sas.SalesAnalysisSystem.model.Distributor;
 import com.sas.SalesAnalysisSystem.model.Salesperson;
 import com.sas.SalesAnalysisSystem.repository.DistributorRepository;
 import com.sas.SalesAnalysisSystem.repository.SalespersonRepository;
@@ -19,21 +20,25 @@ public class SalespersonServiceImpl implements SalespersonService {
 
     private final SalespersonRepository salespersonRepository;
     private final DistributorRepository distributorRepository;
-
     @Autowired
-    public SalespersonServiceImpl(SalespersonRepository salespersonRepository,DistributorRepository 
-    		distributorRepository) {
+    public SalespersonServiceImpl(SalespersonRepository salespersonRepository,DistributorRepository distributorRepository) {
         this.salespersonRepository = salespersonRepository;
-        this.distributorRepository=distributorRepository;
+		this.distributorRepository = distributorRepository;
     }
 
     @Override
     public Salesperson createSalesperson(Salesperson salesperson) {
+        Distributor distributor = salesperson.getDistributor();
+        if (distributor != null && distributor.getDistributorId() == 0) {
+            distributor = distributorRepository.save(distributor);
+        }
+        salesperson.setDistributor(distributor);
+
         return salespersonRepository.save(salesperson);
     }
 
     @Override
-    public Salesperson updateSalesperson(Integer id, Salesperson salesperson) {
+    public Salesperson updateSalesperson(Long id, Salesperson salesperson) {
         Optional<Salesperson> salespersonDb = salespersonRepository.findById(id);
         if (salespersonDb.isPresent()) {
             Salesperson salespersonUpdate = salespersonDb.get();
@@ -56,7 +61,7 @@ public class SalespersonServiceImpl implements SalespersonService {
     }
 
     @Override
-    public Salesperson getSalespersonById(Integer salespersonId) {
+    public Salesperson getSalespersonById(Long salespersonId) {
         Optional<Salesperson> salespersonDb = salespersonRepository.findById(salespersonId);
         if (salespersonDb.isEmpty()) {
             throw new ResourceNotFoundException("Record not found with id: " + salespersonId);
@@ -65,7 +70,7 @@ public class SalespersonServiceImpl implements SalespersonService {
     }
 
     @Override
-    public void deleteSalesperson(Integer salespersonId) {
+    public void deleteSalesperson(Long salespersonId) {
         Optional<Salesperson> salespersonDb = salespersonRepository.findById(salespersonId);
         if (salespersonDb.isPresent()) {
             salespersonRepository.delete(salespersonDb.get());

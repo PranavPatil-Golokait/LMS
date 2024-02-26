@@ -1,4 +1,7 @@
 package com.sas.SalesAnalysisSystem.model;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -11,14 +14,15 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "salesperson")
 public class Salesperson {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "SalespersonID")
-    private int salespersonId;
-
-    @ManyToOne
-    @JoinColumn(name = "DistributorID", referencedColumnName = "DistributorID")
+    private Long id;
+    
+//    @ManyToOne
+//    (cascade = CascadeType.REFRESH)
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "distributor_id") 
+    @JsonBackReference // Use this annotation to break the cyclic reference
     private Distributor distributor;
 
     @Column(name = "Name")
@@ -29,13 +33,14 @@ public class Salesperson {
 
     @Column(name = "Email")
     private String email;
+    
 
-	public int getSalespersonId() {
-		return salespersonId;
+	public Long getSalespersonId() {
+		return id;
 	}
 
-	public void setSalespersonId(int salespersonId) {
-		this.salespersonId = salespersonId;
+	public void setSalespersonId(Long salespersonId) {
+		this.id = salespersonId;
 	}
 
 	public Distributor getDistributor() {
@@ -74,8 +79,8 @@ public class Salesperson {
 		
 	}
 
-	public Salesperson(int salespersonId, Distributor distributor, String name, String contactNumber, String email) {
-		this.salespersonId = salespersonId;
+	public Salesperson(Long salespersonId, Distributor distributor, String name, String contactNumber, String email) {
+		this.id = salespersonId;
 		this.distributor = distributor;
 		this.name = name;
 		this.contactNumber = contactNumber;
@@ -84,7 +89,7 @@ public class Salesperson {
 
 	@Override
 	public String toString() {
-		return "Salesperson [salespersonId=" + salespersonId + ", distributor=" + distributor + ", name=" + name
+		return "Salesperson [salespersonId=" + id + ", distributor=" + distributor + ", name=" + name
 				+ ", contactNumber=" + contactNumber + ", email=" + email + "]";
 	}
 }

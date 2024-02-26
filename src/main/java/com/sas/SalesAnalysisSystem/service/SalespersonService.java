@@ -7,11 +7,11 @@ import java.util.List;
 public interface SalespersonService {
     Salesperson createSalesperson(Salesperson salesperson);
 
-    Salesperson updateSalesperson(Integer id, Salesperson salesperson);
+    Salesperson updateSalesperson(Long id, Salesperson salesperson);
 
     List<Salesperson> getAllSalespersons();
 
-    Salesperson getSalespersonById(Integer salespersonId);
+    Salesperson getSalespersonById(Long salespersonId);
 
-    void deleteSalesperson(Integer salespersonId);
+    void deleteSalesperson(Long salespersonId);
 }

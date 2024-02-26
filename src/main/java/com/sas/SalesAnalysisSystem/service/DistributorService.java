@@ -22,4 +22,9 @@ public interface DistributorService {
 
 	List<Salesperson> getAllSalesperson(Integer id);
 
+	void addProductsToDistributor(int distributorId, List<Long> productIds);
+
+
+	void addSalespersonsToDistributor(int distributorId, List<Long> salespersonIds);
+
 }

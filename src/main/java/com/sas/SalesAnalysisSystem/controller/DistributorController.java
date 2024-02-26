@@ -18,6 +18,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/distributors")
 public class DistributorController {
+	
 
     @Autowired
     private DistributorService distributorService;
@@ -56,6 +57,24 @@ public class DistributorController {
     	
     }
     
+    @PostMapping("/{distributorId}/add-products")
+    public ResponseEntity<Object> addProductsToDistributor(
+            @PathVariable int distributorId,
+            @RequestBody List<Long> productIds) {
+        distributorService.addProductsToDistributor(distributorId, productIds);
+        return ResponseEntity.ok("Products added to distributor successfully");
+    }
+    
+    
+    @PostMapping("/{distributorId}/add-salespersons")
+    public ResponseEntity<String> addSalespersonsToDistributor(
+            @PathVariable int distributorId,
+            @RequestBody List<Long> salespersonIds) {
+        distributorService.addSalespersonsToDistributor(distributorId, salespersonIds);
+        return ResponseEntity.ok("Salespersons added to distributor successfully");
+    }
+
+
     @GetMapping("/{id}")
 	public ResponseEntity<Object> getDistributorById(@PathVariable("id") Integer id) {
         try {

@@ -19,7 +19,6 @@ import java.time.LocalDateTime;
 public class Sales {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "sales_id")
     private Long salesId;
     
     @OneToOne
@@ -38,6 +37,10 @@ public class Sales {
     @CreationTimestamp
     @Column(name = "sales-created-date")
     private LocalDateTime salesCreatedDate;
+    
+    public Sales() {
+    	
+    }
 
 	public Long getSalesId() {
 		return salesId;

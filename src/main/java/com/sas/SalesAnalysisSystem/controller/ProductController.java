@@ -32,9 +32,9 @@ public class ProductController {
 	public ResponseEntity<Object> getAllProduct() {
 	    try {
 	        List<Product> products = productService.getAllProduct();
-	        return ResponseEntity.ok().body(products);
+	        return ResponseEntity.ok().body( products);
 	    } catch (ResourceNotFoundException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No categories found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No products found");
         }
 	}
 	

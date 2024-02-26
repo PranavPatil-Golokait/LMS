@@ -11,6 +11,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -23,15 +24,15 @@ public class Product {
 	 private Long id;
 	 
 	 @ManyToOne
-	 @JoinColumn(name = "invoice_id")  // Name of the foreign key column in the product table
+	 @JoinColumn(name = "distributor_id") // This is the foreign key in the product table
+	 private Distributor distributor;
+	 
+	 @ManyToOne
+	 @JoinColumn(name = "invoice_id") 
 	 private Invoice invoice;
 	
 	@Column(name = "product_name")
 	private String productName;
-	
-	@ManyToOne
-    @JoinColumn(name = "distributor_id")
-    private Distributor distributor;
 
 	@Column(name = "image")
 	private String image;
@@ -45,6 +46,7 @@ public class Product {
 	
 	@Column(name="is_active")
 	private Boolean isActive= true;
+	
 	
 	@CreationTimestamp
 	private LocalDateTime createdAt;
